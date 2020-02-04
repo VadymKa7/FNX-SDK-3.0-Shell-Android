@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.fannex.fnxapp"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    androidExtensions { experimental = true }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            String apkVersion = "${variant.buildType.name}-v${variant.versionName}.(${variant.versionCode})"
+            outputFileName = "FNX Shell app-${apkVersion}.apk"
+            buildConfigField("String", "APK_VERSION", "\"${apkVersion}\"")
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation dependenciesMap.kotlin
+    implementation dependenciesMap.coreKtx
+    implementation dependenciesMap.lifecycleExtantions
+    implementation dependenciesMap.fragmentKtx
+    implementation dependenciesMap.appCompat
+    implementation dependenciesMap.constraintLayout
+    implementation dependenciesMap.material
+    implementation dependenciesMap.rxJava
+    implementation dependenciesMap.rxAndroid
+    implementation dependenciesMap.retrofit
+    implementation dependenciesMap.retrofitGsonConverter
+    implementation dependenciesMap.retrofitRxAdapter
+    implementation dependenciesMap.okHttpInterceptor
+    implementation dependenciesMap.glide
+    implementation dependenciesMap.koin
+    implementation dependenciesMap.koinViewmodel
+    implementation dependenciesMap.spinner
+    implementation dependenciesMap.lifecycle
+    implementation dependenciesMap.cookie
+}
